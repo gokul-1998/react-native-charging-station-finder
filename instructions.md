@@ -1,5 +1,9 @@
 ## These steps are to be followed to create the application.
 
+
+- https://icons.expo.fyi/Index/FontAwesome/search
+    - use the above link to get the icons
+    
 - `npx create-expo-app EV-Charging-Station-App`
     - expo is  a framework and platform for universal React applications.
     -  It is a set of tools and services built around React Native and native platforms that help you develop, build, deploy, and quickly iterate on iOS, Android, and web apps from the same JavaScript/TypeScript codebase.
@@ -19,3 +23,5 @@
     - `npm install expo-secure-store`
     - `npm install @react-navigation/native`
     - `npm install @react-navigation/material-bottom-tabs react-native-paper react-native-vector-icons`
+
+- refer this for active screens.
