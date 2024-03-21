@@ -1,0 +1,4 @@
+- `App.js` is the starting point of the application
+- `app.json` is  the configuration file for the application
+- `expo-go`
+    - we can scan the qr 
