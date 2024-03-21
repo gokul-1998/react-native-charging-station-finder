@@ -27,3 +27,4 @@
 
 - refer this for active screens.
     - `npx expo install react-native-maps`
+    - `npx expo install expo-location`

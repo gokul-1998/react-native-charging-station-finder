@@ -3,11 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import LoginScreen from './App/Screen/LoginScreen/LoginScreen.jsx';
 import * as SecureStore from "expo-secure-store";
+
+import * as Location from 'expo-location';
 import { NavigationContainer } from '@react-navigation/native';
 import TabNavigation from './App/Navigations/TabNavigation.jsx';
+import { UserLocationContext } from './App/Context/UserLocationContext.jsx';
 
 
 SplashScreen.preventAutoHideAsync();
@@ -38,6 +41,32 @@ export default function App() {
     'outfit-bold': require('./assets/fonts/Outfit-Bold.ttf'),
   });
 
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location.coords);
+      
+    })();
+  }, []);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
+
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
       await SplashScreen.hideAsync();
@@ -54,6 +83,7 @@ export default function App() {
      publishableKey={"pk_test_a2Vlbi1iZWV0bGUtMzYuY2xlcmsuYWNjb3VudHMuZGV2JA"}
      
      >
+      <UserLocationContext.Provider value={{location, setLocation}}>
 
     <View style={styles.container} onLayout={onLayoutRootView}>
     <SignedIn>
@@ -67,6 +97,7 @@ export default function App() {
         </SignedOut>
       <StatusBar style="auto" />
     </View>
+    </UserLocationContext.Provider>
     </ClerkProvider>
   );
 }
