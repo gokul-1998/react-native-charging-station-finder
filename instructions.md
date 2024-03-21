@@ -10,3 +10,9 @@
 
 - `npx expo install expo-font`
 - `npx expo install expo-splash-screen`
+
+## lets create clerk login
+    - create a new project in  clerk    
+        - use `facebook` and `google` as the authentication providers 
+    -  `npm install @clerk/clerk-expo`
+    - `npx expo install expo-web-browser`

@@ -1,10 +1,34 @@
  import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
  import React from 'react'
+ import * as WebBrowser from "expo-web-browser";
 
  import Colors from './../../Utils/Colors.js'
+import  {useWarmUpBrowser}  from '../../../hooks/useWarmUpBrowser';
+import { useOAuth } from '@clerk/clerk-expo';
  
+ WebBrowser.maybeCompleteAuthSession();
+
  export default function LoginScreen() {
-   return (
+  useWarmUpBrowser();
+ 
+  const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
+  const onPress=async()=> {
+    try {
+      const { createdSessionId, signIn, signUp, setActive } =
+        await startOAuthFlow();
+ 
+      if (createdSessionId) {
+        setActive({ session: createdSessionId });
+      } else {
+        // Use signIn or signUp for next steps such as MFA
+      }
+    } catch (err) {
+      console.error("OAuth error", err);
+    }
+
+  }
+  
+  return (
      <View style={{
         display:'flex',
         justifyContent:'center',
@@ -18,7 +42,7 @@
         <Text style={styles.heading}>Your Ultimate EV charging Station Finder App</Text>
         <Text style={styles.desc}>Find EV charging station near you, plan trip so much more in just one click </Text>
         <TouchableOpacity style={styles.button}
-        onPress={()=>alert('Login With Google')}
+        onPress={onPress}
         >
             <Text style={{
                 color:Colors.WHITE,

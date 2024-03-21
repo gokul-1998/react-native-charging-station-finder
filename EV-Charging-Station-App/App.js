@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { useCallback } from 'react';
 import LoginScreen from './App/Screen/LoginScreen/LoginScreen.jsx';
 
@@ -24,10 +25,19 @@ export default function App() {
     return null;
   }
   return (
+    <ClerkProvider publishableKey={"pk_test_a2Vlbi1iZWV0bGUtMzYuY2xlcmsuYWNjb3VudHMuZGV2JA"}>
+
     <View style={styles.container} onLayout={onLayoutRootView}>
+    <SignedIn>
+          <Text>You are Signed in</Text>
+        </SignedIn>
+        <SignedOut>
+        
       <LoginScreen/>
+        </SignedOut>
       <StatusBar style="auto" />
     </View>
+    </ClerkProvider>
   );
 }
 
