@@ -16,3 +16,6 @@
         - use `facebook` and `google` as the authentication providers 
     -  `npm install @clerk/clerk-expo`
     - `npx expo install expo-web-browser`
+    - `npm install expo-secure-store`
+    - `npm install @react-navigation/native`
+    - `npm install @react-navigation/material-bottom-tabs react-native-paper react-native-vector-icons`
