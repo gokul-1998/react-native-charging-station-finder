@@ -7,3 +7,6 @@
 
 - `npm start` - to run the  application
 - `npx expo install react-native-web react-dom @expo/metro-runtime`
+
+- `npx expo install expo-font`
+- `npx expo install expo-splash-screen`
