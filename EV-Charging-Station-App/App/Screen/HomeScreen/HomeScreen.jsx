@@ -1,15 +1,16 @@
 import { View, Text, StyleSheet } from 'react-native'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import AppMapView from './AppMapView.jsx'
 import Header from './Header.jsx'
 import SearchBar from './SearchBar.jsx'
 import GlobalApi from '../../Utils/GlobalApi.js'
 import { UserLocationContext } from '../../Context/UserLocationContext.jsx'
+import PlaceListView from './PlaceListView.jsx'
 
 export default function HomeScreen() {
 
   const {location,setLocation}=useContext(UserLocationContext);
-
+  const [placeList,setPlaceList]=useState([]);
 
   useEffect(()=>{
      location && GetNearByPlace();
@@ -29,6 +30,7 @@ export default function HomeScreen() {
     }
     GlobalApi.NewNearByPlace(data).then(resp=>{
       console.log(JSON.stringify(resp.data));
+      setPlaceList(resp.data?.places);
     })
   }
 
@@ -39,6 +41,9 @@ export default function HomeScreen() {
         <SearchBar searchedLocation={(location)=>console.log(location)}/>
       </View>
       <AppMapView />
+      <View style={styles.placeListContainer}>
+        {placeList && <PlaceListView placeList={placeList}/>}
+      </View>
     </View>
   )
 }
@@ -50,5 +55,16 @@ const styles = StyleSheet.create({
     padding:10,
     width:'100%',
     paddingHorizontal:20,
-  }
+  },
+  placeListContainer:{
+    position:'absolute',
+    zIndex:10,
+    bottom:0,
+    width:'100%',
+    height:'50%',
+    backgroundColor:'white',
+    borderTopLeftRadius:20,
+    borderTopRightRadius:20,
+    padding:10,
+  } 
 })
