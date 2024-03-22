@@ -28,3 +28,4 @@
 - refer this for active screens.
     - `npx expo install react-native-maps`
     - `npx expo install expo-location`
+    - `npm install react-native-google-places-autocomplete --save`
